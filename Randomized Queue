@@ -1,0 +1,400 @@
+
+package mini.project;
+
+import java.awt.Insets;
+import java.util.Iterator;
+import java.util.Random;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
+
+/**
+ *
+ * @author 21cs049
+ */
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import mini.project.MiniProject.RandomizedQueue.Node1;
+
+public class Main extends Application {
+         public class RandomizedQueue<Item> implements Iterable<Item>{
+             class Node1{
+                      Item data;
+                      Node1 next;
+                      public Node1(Item val){
+                              data=val;
+                              next=null;
+                     }
+              }
+               class RandomIterator implements Iterator<Item>
+              {
+                 int cur=0;
+                 Item[] items;
+                 public RandomIterator(int c)
+                 {
+                    Item[] items = (Item[]) new Object[c]; 
+                    Node1 node=top;
+                    int i=0;
+                    while(node!=null)
+                    {
+                        items[i]=node.data;
+                        System.out.println(items[i++]);
+                        node=node.next;
+                    }
+                 }
+                 @Override
+                 public boolean hasNext(){
+                         return cur<co;
+                 }
+                 @Override
+                 public Item next(){
+                          System.out.println(items[cur]);
+                          return items[cur++];
+                 }
+               }
+              Node1 top;
+              int co=0;
+              public RandomizedQueue(){
+                          top=null;
+              }
+              public void enqueue(Item x){
+                          if(x==null)
+                                 throw new IllegalArgumentException();
+                          Node1 n=new Node1(x);
+                          n.next=top;
+                          top=n;
+                          co++;
+                          System.out.println(x+" "+"inserted");
+              }
+              public Item dequeue(int c)
+              {
+                if(top==null)
+                                       throw new java.util.NoSuchElementException();
+                Random rand=new Random();
+                int n=rand.nextInt(c);
+                  System.out.println("Random deleted node index:"+n);
+                if(n==0)
+                {
+                    Node1 t=top;
+                    top=top.next;
+                    return t.data;
+                }
+                else{ 
+                        Node1 t=top;
+                        for(int i=0;i<n-1;i++)
+                                        t=t.next;
+                        Node1 temp=t.next;
+                        Item e=temp.data;
+                        t.next=temp.next;
+                        co--;
+                        return e;
+                 }
+              
+               }
+               public Item sample(int cn)
+               {
+                  Random rand=new Random();
+                  int x=rand.nextInt(cn);
+                  Node1 t=top;
+                  for(int i=1;i<x;i++)
+                         t=t.next;
+                  return t.data;
+               }
+               int size(int c)
+               {
+                     return c;
+                }
+             @Override
+               public Iterator<Item> iterator()
+               { 
+                   Iterator<Item> it= new RandomIterator(co);
+                   return it;
+                 }
+    }
+             Scene scene1,scene2,scene3,scene4,scene5,scene6,scene7;
+             @Override
+    public void start(Stage primaryStage) throws Exception {
+        GridPane g=new GridPane();
+        VBox vbox1=new VBox();
+        VBox vbox2=new VBox();
+        VBox vbox3=new VBox();
+        VBox vbox41=new VBox();
+        VBox vbox5=new VBox();
+        VBox vbox6=new VBox();
+        VBox vbox7=new VBox();
+        VBox vbox=new VBox();
+        RandomizedQueue<Integer> obj=new RandomizedQueue<Integer>();
+        RandomizedQueue<Character> obj1=new RandomizedQueue<Character>();
+        Text sceneTitle = new Text("MENU:");
+        sceneTitle.setFont(Font.font("Helvetica", FontWeight.NORMAL, 20));
+        primaryStage.setTitle("RanomizdQueue");  
+        Button b1=new Button(" int-enqueue ");
+        Button b3=new Button(" int-dequeue ");
+        Button b4=new Button("  int-display  ");
+        Button b5=new Button("char-enqueue");
+        Button b6=new Button("char-dequeue");
+        Button b7=new Button("char-display ");
+        Button b8=new Button("  int-sample  ");
+        Button b9=new Button("char-sample  ");
+         Text text1 = new Text();
+        b1.setOnAction((ActionEvent event) -> {
+            primaryStage.setScene(scene2);
+        });
+          
+
+                vbox.setAlignment(Pos.CENTER);
+                text1.setText("enter the enqueue element:");
+                TextField textField1 = new TextField();
+                vbox.getChildren().add(text1);
+                vbox.getChildren().add(textField1);
+                Button b2=new Button();
+                b2.setText("enqueue");
+                vbox.getChildren().add(b2);
+                Button b10=new Button("back");
+                vbox.getChildren().addAll(b10);
+                
+                b10.setOnAction((ActionEvent event2) -> {
+                        primaryStage.setScene(scene1) ;
+                });
+                
+                b2.setOnAction((ActionEvent event1) -> {
+                    int n = Integer.parseInt(textField1.getText());
+                    obj.enqueue(n);
+                    Text text2=new Text();
+                    text2.setText(n+" "+"inserted");
+                    vbox.getChildren().add(text2);
+                    textField1.clear();
+                });
+                
+                scene2 =new Scene(vbox,400,400);
+                primaryStage.setScene(scene2);
+                primaryStage.show();
+                 
+                vbox1.setAlignment(Pos.CENTER); 
+                b3.setOnAction((ActionEvent event) -> {
+                    primaryStage.setScene(scene3);
+                });
+                Button b12=new Button("dequeue");
+                vbox1.getChildren().add(b12);
+                b12.setOnAction((ActionEvent event) -> {
+                    Text text3=new Text();
+                    int n1=obj.dequeue(obj.co);
+                    text3.setText(n1+" "+"deleted");
+                    vbox1.getChildren().add(text3);
+                });
+
+                    Button b11=new Button("back");
+                    vbox1.getChildren().add(b11);
+                b11.setOnAction((ActionEvent event) -> {
+                        primaryStage.setScene(scene1) ;
+                });
+                
+                scene3 = new Scene(vbox1,400,400); 
+                primaryStage.setScene(scene2);
+                primaryStage.show();
+
+       
+
+            
+        vbox2.setAlignment(Pos.CENTER);
+        b4.setOnAction((ActionEvent event) -> {
+             primaryStage.setScene(scene4);
+        });
+        Button disp=new Button("display");
+        vbox2.getChildren().add(disp);
+        disp.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                RandomizedQueue.Node1 t=obj.top;
+                Text text5=new Text();
+                text5.setText("RandomizedQueue Elements");
+                if(t==null)
+                {
+                    Text text61 =new Text();
+                    text61.setText("RandomizedQueue is empty!!!");
+                    vbox2.getChildren().add(text61);
+                }
+                
+                else{
+                vbox2.getChildren().add(text5);
+                while(t!=null)
+                {
+                    Text text4=new Text();
+                    text4.setText(t.data+"");
+                    vbox2.getChildren().add(text4);
+                    t=t.next;
+                }
+              }
+            }
+        });
+                    Button back1=new Button("back");
+                    vbox2.getChildren().add(back1);
+                    back1.setOnAction((ActionEvent event) -> {
+                        primaryStage.setScene(scene1) ;
+                });
+        scene4=new Scene(vbox2,400,400);
+        primaryStage.setScene(scene4);
+        primaryStage.show();
+         
+        vbox3.setAlignment(Pos.CENTER);
+        b5.setOnAction((ActionEvent event) -> {
+              primaryStage.setScene(scene5);
+        });
+        
+                vbox3.setAlignment(Pos.CENTER);
+                Text text6 = new Text();
+                text6.setText("enter the enqueue element:");
+                TextField textField2 = new TextField();
+                vbox3.getChildren().add(text6);
+                vbox3.getChildren().add(textField2);
+                Button b21=new Button();
+                b21.setText("enqueue");
+                vbox3.getChildren().add(b21);
+                Button back2=new Button("back");
+                vbox3.getChildren().add(back2);
+                back2.setOnAction((ActionEvent event) -> {
+                        primaryStage.setScene(scene1) ;
+                });
+                b21.setOnAction((ActionEvent event1) -> {
+                    String n3 = textField2.getText();
+                    char n4=n3.charAt(0);
+                    obj1.enqueue(n4);
+                    Text text2=new Text();
+                    text2.setText(n4+" "+"inserted");
+                    vbox3.getChildren().add(text2);
+                    textField2.clear();
+                });
+
+
+
+                scene5=new Scene(vbox3,400,400);
+                primaryStage.setScene(scene5);
+                primaryStage.show();
+                
+        vbox41.setAlignment(Pos.CENTER);               
+        b6.setOnAction((ActionEvent event) -> {
+                    primaryStage.setScene(scene6);
+         });
+        Button del=new Button("dequeue");
+        Button back3=new Button("back");
+        vbox41.getChildren().addAll(del,back3);
+        del.setOnAction((ActionEvent event) -> {
+            Text text7=new Text();
+            char n5=obj1.dequeue(obj1.co);
+            text7.setText(n5+" "+"deleted");
+            vbox41.getChildren().add(text7);
+        });
+
+        back3.setOnAction((ActionEvent event) -> {
+                  primaryStage.setScene(scene1) ;
+        });
+
+
+        scene6=new Scene(vbox41,400,400);
+        primaryStage.setScene(scene6);
+        primaryStage.show();
+        
+        
+        vbox5.setAlignment(Pos.CENTER);
+        b7.setOnAction((ActionEvent event) -> {
+             primaryStage.setScene(scene7);
+        });
+        Button disp2=new Button("display");
+        Text text51=new Text();
+        disp2.setOnAction((ActionEvent event) -> {
+        RandomizedQueue.Node1 t=obj1.top;
+        text51.setText("RandomizedQueue Elements");
+        if(t==null){
+           Text text61=new Text();
+            text61.setText("RandomizedQueue is empty!!!");
+            vbox5.getChildren().add(text61);  
+        }
+        else{
+            vbox5.getChildren().add(text51);
+            while(t!=null)
+            {
+                Text text41=new Text();
+                text41.setText(t.data+"");
+                vbox5.getChildren().add(text41);
+                t=t.next;
+            }
+          }
+       }); 
+        vbox5.getChildren().add(disp2);      
+        Button back4=new Button("back");
+        vbox5.getChildren().add(back4);
+        back4.setOnAction((ActionEvent event) -> {
+                  primaryStage.setScene(scene1) ;
+        });
+        scene7=new Scene(vbox5,400,400);
+        primaryStage.setScene(scene7);
+        primaryStage.show();
+        
+        b8.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                int s=obj.sample(obj.co);
+                Text text13=new Text();
+                text13.setText("Random element:");
+                vbox.getChildren().add(text13);
+                Text text10=new Text();
+                text10.setText(s+"");
+                g.add(text10,2,8);
+            }
+        });
+        b9.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                char s=obj1.sample(obj.co);
+                Text text12=new Text();
+                text12.setText("Random element:");
+                vbox.getChildren().add(text12);
+                Text text11=new Text();
+                text11.setText(s+"");
+                g.add(text11,2,9);
+            }
+        });
+              //Setting size for the pane  
+      g.setMinSize(400, 200); 
+       
+      //Setting the padding  
+
+      
+      //Setting the vertical and horizontal gaps between the columns 
+      g.setVgap(5); 
+      g.setHgap(5);       
+      
+      //Setting the Grid alignment 
+      g.setAlignment(Pos.CENTER);
+        g.add(sceneTitle,1,0);
+        g.add(b1,1,2);
+        g.add(b3,1,3);
+        g.add(b4,1,4);
+        g.add(b5,1,5);
+        g.add(b6,1,6);
+        g.add(b7,1,7);
+        g.add(b8,1,8);
+        g.add(b9,1,9);
+ 
+             scene1 = new Scene(g,400,400);
+        primaryStage.setScene(scene1);
+        primaryStage.show();
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
+    
+}
